@@ -47,10 +47,15 @@ def parse_item_as_object(item, update_all=False):
     """
     Разбор данных о версии, как объекта
     """
+    print('parse_item_as_object')
+
     ver, created = Version.objects.get_or_create(
         ver=item.VersionId,
         dumpdate=datetime.datetime.strptime(item.TextVersion[-10:], "%d.%m.%Y").date(),
     )
+
+    print(item.__dict__)
+    print('FiasCompleteXmlUrl', item.__dict__.get('FiasCompleteXmlUrl'))
 
     if created or update_all:
         setattr(ver, 'complete_xml_url', item.FiasCompleteXmlUrl)
