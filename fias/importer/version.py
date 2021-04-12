@@ -16,15 +16,14 @@ def parse_item_as_dict(item, update_all=False):
     """
     Разбор данных о версии как словаря
     """
-    print('parse_item_as_dict')
+
+    if not item['FiasCompleteXmlUrl'] or not item['FiasCompleteDbfUrl']:
+        return
 
     ver, created = Version.objects.get_or_create(
         ver=item['VersionId'],
         dumpdate=datetime.datetime.strptime(item['TextVersion'][-10:], "%d.%m.%Y").date(),
     )
-
-    print(item)
-    print('FiasCompleteXmlUrl', item.get('FiasCompleteXmlUrl'))
 
     if created or update_all:
         setattr(ver, 'complete_xml_url', item['FiasCompleteXmlUrl'])
@@ -47,15 +46,14 @@ def parse_item_as_object(item, update_all=False):
     """
     Разбор данных о версии, как объекта
     """
-    print('parse_item_as_object')
+
+    if not item.FiasCompleteXmlUrl or not item.FiasCompleteDbfUrl:
+        return
 
     ver, created = Version.objects.get_or_create(
         ver=item.VersionId,
         dumpdate=datetime.datetime.strptime(item.TextVersion[-10:], "%d.%m.%Y").date(),
     )
-
-    print(vars(item))
-    print('FiasCompleteXmlUrl', item.__dict__.get('FiasCompleteXmlUrl'))
 
     if created or update_all:
         setattr(ver, 'complete_xml_url', item.FiasCompleteXmlUrl)
