@@ -54,7 +54,7 @@ def parse_item_as_object(item, update_all=False):
         dumpdate=datetime.datetime.strptime(item.TextVersion[-10:], "%d.%m.%Y").date(),
     )
 
-    print(item.__dict__)
+    print(vars(item))
     print('FiasCompleteXmlUrl', item.__dict__.get('FiasCompleteXmlUrl'))
 
     if created or update_all:
