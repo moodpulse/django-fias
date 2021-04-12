@@ -21,6 +21,9 @@ def parse_item_as_dict(item, update_all=False):
         dumpdate=datetime.datetime.strptime(item['TextVersion'][-10:], "%d.%m.%Y").date(),
     )
 
+    print(item)
+    print('FiasCompleteXmlUrl', item.get('FiasCompleteXmlUrl'))
+
     if created or update_all:
         setattr(ver, 'complete_xml_url', item['FiasCompleteXmlUrl'])
         setattr(ver, 'complete_dbf_url', item['FiasCompleteDbfUrl'])
