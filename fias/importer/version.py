@@ -16,6 +16,8 @@ def parse_item_as_dict(item, update_all=False):
     """
     Разбор данных о версии как словаря
     """
+    print('parse_item_as_dict')
+
     ver, created = Version.objects.get_or_create(
         ver=item['VersionId'],
         dumpdate=datetime.datetime.strptime(item['TextVersion'][-10:], "%d.%m.%Y").date(),
