@@ -43,12 +43,13 @@ class LocalArchiveTableList(TableList):
         try:
             archive = rarfile.RarFile(source)
         except (rarfile.NotRarFile, rarfile.BadRarFile) as e:
-            raise BadArchiveError('Archive: `{0}`, ver: `{1}` corrupted'
-                                  ' or is not rar-archive'.format(source))
+            print(e)
+            raise BadArchiveError('Archive: `{}`, ver: `{}` corrupted'
+                                  ' or is not rar-archive'.format(source, '?'))
 
         if not archive.namelist():
-            raise BadArchiveError('Archive: `{0}`, ver: `{1}` is empty'
-                                  ''.format(source))
+            raise BadArchiveError('Archive: `{}`, ver: `{}` is empty'
+                                  ''.format(source, '?'))
 
         first_name = archive.namelist()[0]
         if table_dbf_re.match(first_name) or table_dbt_re.match(first_name):
