@@ -4,6 +4,7 @@ from __future__ import unicode_literals, absolute_import
 from django.conf import settings
 
 import rarfile
+import zipfile
 import tempfile
 from progress.bar import Bar
 
@@ -39,13 +40,21 @@ class LocalArchiveTableList(TableList):
         archive.extractall(path)
         return path
 
-    def load_data(self, source):
-        try:
-            archive = rarfile.RarFile(source)
-        except (rarfile.NotRarFile, rarfile.BadRarFile) as e:
-            print(e)
-            raise BadArchiveError('Archive: `{}`, ver: `{}` corrupted'
-                                  ' or is not rar-archive'.format(source, '?'))
+    def load_data(self, source: str):
+        if source.endswith('.zip'):
+            try:
+                archive = zipfile.ZipFile(source)
+            except (zipfile.BadZipfile) as e:
+                print(e)
+                raise BadArchiveError('Archive: `{}`, ver: `{}` corrupted'
+                                      ' or is not rar-archive'.format(source, '?'))
+        else:
+            try:
+                archive = rarfile.RarFile(source)
+            except (rarfile.NotRarFile, rarfile.BadRarFile) as e:
+                print(e)
+                raise BadArchiveError('Archive: `{}`, ver: `{}` corrupted'
+                                      ' or is not rar-archive'.format(source, '?'))
 
         if not archive.namelist():
             raise BadArchiveError('Archive: `{}`, ver: `{}` is empty'
