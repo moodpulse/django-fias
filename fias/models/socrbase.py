@@ -21,7 +21,7 @@ class SocrBase(models.Model):
         ordering = ['level', 'scname']
 
     level = models.PositiveSmallIntegerField('Уровень адресного объекта')
-    scname = models.CharField('Краткое наименование типа объекта', max_length=10, default=" ")
+    scname = models.CharField('Краткое наименование типа объекта', max_length=20, default=" ")
     socrname = models.CharField('Полное наименование типа объекта', max_length=50, default=" ")
     kod_t_st = models.PositiveIntegerField('Ключевое поле', primary_key=True)
 

@@ -27,8 +27,8 @@ class House(June2016Update):
 
     housenum = models.CharField('Номер дома', max_length=20, blank=True, null=True)
     eststatus = models.ForeignKey(EstStat, verbose_name='Признак владения', default=0, on_delete=models.CASCADE)
-    buildnum = models.CharField('Номер корпуса', max_length=10, blank=True, null=True)
-    strucnum = models.CharField('Номер строения', max_length=10, blank=True, null=True)
+    buildnum = models.CharField('Номер корпуса', max_length=20, blank=True, null=True)
+    strucnum = models.CharField('Номер строения', max_length=20, blank=True, null=True)
     strstatus = models.ForeignKey(StrStat, verbose_name='Признак строения', default=0, on_delete=models.CASCADE)
 
     statstatus = models.PositiveSmallIntegerField('Состояние дома')
