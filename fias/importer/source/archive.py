@@ -41,17 +41,13 @@ class LocalArchiveTableList(TableList):
         return path
 
     def load_data(self, source: str):
-        if source.endswith('.zip'):
+        try:
+            archive = rarfile.RarFile(source)
+        except (rarfile.NotRarFile, rarfile.BadRarFile) as e:
+            print('Archive: `{}`, ver: `{}` corrupted or is not rar-archive'.format(source, '?'))
             try:
                 archive = zipfile.ZipFile(source)
             except (zipfile.BadZipfile) as e:
-                print(e)
-                raise BadArchiveError('Archive: `{}`, ver: `{}` corrupted'
-                                      ' or is not rar-archive'.format(source, '?'))
-        else:
-            try:
-                archive = rarfile.RarFile(source)
-            except (rarfile.NotRarFile, rarfile.BadRarFile) as e:
                 print(e)
                 raise BadArchiveError('Archive: `{}`, ver: `{}` corrupted'
                                       ' or is not rar-archive'.format(source, '?'))
